@@ -1,0 +1,53 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+# Logging settings.
+logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+
+  # Logger-specific levels.
+  loggers:
+
+    # Sets the level for 'com.example.app' to DEBUG.
+    com.example.app: DEBUG
+
+    # Redirects SQL logs to a separate file
+    org.hibernate.SQL:
+      level: DEBUG
+
+  appenders:
+    - type: console
+    - type: file
+      threshold: INFO
+#      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+      currentLogFilename: /tmp/application.log
+      archivedLogFilenamePattern: /tmp/application-%d{yyyy-MM-dd}-%i.log.gz
+      archivedFileCount: 7
+      timeZone: UTC
+      maxFileSize: 1G
+
+# database
+database:
+  driverClass: org.postgresql.Driver
+  user: {USER}
+  password:
+  url: jdbc:postgresql://localhost:5432/packmule
+  properties:
+    charSet: UTF-8
+  maxWaitForConnection: 1s
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationQueryTimeout: 3s
+  minSize: 8
+  maxSize: 32
+
+fifthAve:
+  url: https://5thave-dev.bybieyang.com
+  adminUserId: xxxx-xxxx
+  adminSessionKey: xxxx-xxxx
